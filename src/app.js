@@ -4,18 +4,32 @@
 const $ = (id) => document.getElementById(id);
 
 function fmt(x, digits = 3) {
-  // Human-readable formatting: avoid scientific notation.
+  // Human-readable formatting:
+  // - avoid scientific notation
+  // - abbreviate large values with k/M/B
   if (!Number.isFinite(x)) return "–";
 
   const abs = Math.abs(x);
 
-  // Choose a sensible default precision when caller didn't request much.
-  // (Assays can be small; costs/masses can be large.)
+  // Abbreviate big numbers (typically costs, kgU, SWU)
+  if (abs >= 1e3) {
+    const units = [
+      { v: 1e9, s: "B" },
+      { v: 1e6, s: "M" },
+      { v: 1e3, s: "k" },
+    ];
+    const u = units.find((u) => abs >= u.v);
+    if (u) {
+      const scaled = x / u.v;
+      const frac = Math.abs(scaled) >= 100 ? 0 : Math.abs(scaled) >= 10 ? 1 : 2;
+      return `${scaled.toLocaleString(undefined, { maximumFractionDigits: frac })}${u.s}`;
+    }
+  }
+
+  // For small numbers (assays), allow more decimals
   let maxFrac = digits;
   if (abs > 0 && abs < 0.01) maxFrac = Math.max(maxFrac, 6);
   if (abs > 0 && abs < 0.001) maxFrac = Math.max(maxFrac, 8);
-
-  // Clamp to keep things readable
   maxFrac = Math.min(maxFrac, 10);
 
   return x.toLocaleString(undefined, {
