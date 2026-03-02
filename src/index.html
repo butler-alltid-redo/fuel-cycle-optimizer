@@ -1,19 +1,11 @@
 <!doctype html>
-<html lang="en" class="">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fuel-cycle optimizer (Feed & SWU)</title>
 
     <!-- Tailwind (CDN for MVP) -->
-    <script>
-      // Make Tailwind respect a manual `.dark` class on <html>
-      tailwind = {
-        config: {
-          darkMode: 'class',
-        },
-      };
-    </script>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Plotly (CDN) -->
@@ -21,21 +13,11 @@
   </head>
   <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
     <div class="max-w-6xl mx-auto p-4 md:p-8">
-      <header class="mb-6 flex items-start justify-between gap-4">
-        <div>
-          <h1 class="text-2xl md:text-3xl font-semibold">Fuel-cycle optimizer (Feed &amp; SWU)</h1>
-          <p class="text-slate-600 dark:text-slate-300 mt-2">
-            Toy model for enrichment mass balance + SWU. Explore how tails assay trades feed vs SWU, and find the cost-minimizing tails.
-          </p>
-        </div>
-        <button
-          id="darkToggle"
-          class="shrink-0 text-sm px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-900"
-          type="button"
-          title="Toggle dark mode"
-        >
-          Dark
-        </button>
+      <header class="mb-6">
+        <h1 class="text-2xl md:text-3xl font-semibold">Fuel-cycle optimizer (Feed &amp; SWU)</h1>
+        <p class="text-slate-600 dark:text-slate-300 mt-2">
+          Toy model for enrichment mass balance + SWU. Explore how tails assay trades feed vs SWU, and find the cost-minimizing tails.
+        </p>
       </header>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">

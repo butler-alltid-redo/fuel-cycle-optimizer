@@ -187,7 +187,7 @@ function render() {
 
   const optX = opt ? opt.xt * 100 : null;
 
-  const dark = document.documentElement.classList.contains("dark");
+  const dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
   const plotBg = dark ? "#0b1220" : "#ffffff";
   const paperBg = dark ? "#0b1220" : "#ffffff";
   const fontColor = dark ? "#e2e8f0" : "#0f172a";
@@ -401,39 +401,16 @@ function wireEvents() {
   }
 }
 
-function initDarkMode() {
-  const root = document.documentElement;
-  const btn = $("darkToggle");
-
-  const apply = (mode) => {
-    const dark = mode === "dark";
-    root.classList.toggle("dark", dark);
-    if (btn) btn.textContent = dark ? "Light" : "Dark";
-  };
-
-  // initial
-  const saved = localStorage.getItem("theme");
-  if (saved === "dark" || saved === "light") {
-    apply(saved);
-  } else {
-    // default to system preference
-    const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-    apply(prefersDark ? "dark" : "light");
-  }
-
-  if (btn) {
-    btn.addEventListener("click", () => {
-      const nowDark = root.classList.contains("dark");
-      const next = nowDark ? "light" : "dark";
-      localStorage.setItem("theme", next);
-      apply(next);
-      // Re-render Plotly with current layout colors
-      render();
-    });
-  }
+function initSystemThemeListener() {
+  // Re-render plots when system theme changes
+  if (!window.matchMedia) return;
+  const mq = window.matchMedia("(prefers-color-scheme: dark)");
+  // Safari uses addListener
+  if (mq.addEventListener) mq.addEventListener("change", () => render());
+  else if (mq.addListener) mq.addListener(() => render());
 }
 
 setDefaults();
-initDarkMode();
+initSystemThemeListener();
 wireEvents();
 render();
