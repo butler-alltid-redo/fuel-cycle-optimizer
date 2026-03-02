@@ -202,7 +202,7 @@ function render() {
         type: "scatter",
         mode: "lines",
         name: "Total cost",
-        line: { color: "#0f172a" },
+        line: { color: dark ? "#38bdf8" : "#0f172a", width: 3 },
       },
       ...(optX
         ? [
@@ -212,7 +212,7 @@ function render() {
               type: "scatter",
               mode: "markers",
               name: "Optimum",
-              marker: { size: 10, color: "#dc2626" },
+              marker: { size: 10, color: "#f87171" },
             },
           ]
         : []),
@@ -222,7 +222,7 @@ function render() {
         type: "scatter",
         mode: "markers",
         name: "Current",
-        marker: { size: 10, color: "#2563eb" },
+        marker: { size: 10, color: dark ? "#60a5fa" : "#2563eb" },
       },
     ],
     {
