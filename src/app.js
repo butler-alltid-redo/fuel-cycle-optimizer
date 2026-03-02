@@ -192,6 +192,7 @@ function render() {
   const paperBg = dark ? "#0b1220" : "#ffffff";
   const fontColor = dark ? "#e2e8f0" : "#0f172a";
   const gridColor = dark ? "#1f2937" : "#e5e7eb";
+  const lineColor = dark ? "#64748b" : "#334155"; // consistent across all plots
 
   Plotly.react(
     "plotCost",
@@ -203,7 +204,7 @@ function render() {
         mode: "lines",
         name: "Total cost",
         // Match style with the other plots
-        line: { color: dark ? "#94a3b8" : "#334155" },
+        line: { color: lineColor },
       },
       ...(optX
         ? [
@@ -247,7 +248,7 @@ function render() {
   Plotly.react(
     "plotSWU",
     [
-      { x: xs, y: ysSWU, type: "scatter", mode: "lines", name: "SWU", line: { color: "#334155" } },
+      { x: xs, y: ysSWU, type: "scatter", mode: "lines", name: "SWU", line: { color: lineColor } },
       {
         x: [inp.xt * 100],
         y: [c.SWU],
@@ -272,7 +273,7 @@ function render() {
   Plotly.react(
     "plotFeed",
     [
-      { x: xs, y: ysFeed, type: "scatter", mode: "lines", name: "Feed", line: { color: "#334155" } },
+      { x: xs, y: ysFeed, type: "scatter", mode: "lines", name: "Feed", line: { color: lineColor } },
       {
         x: [inp.xt * 100],
         y: [c.F],
