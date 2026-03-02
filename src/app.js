@@ -4,10 +4,24 @@
 const $ = (id) => document.getElementById(id);
 
 function fmt(x, digits = 3) {
+  // Human-readable formatting: avoid scientific notation.
   if (!Number.isFinite(x)) return "–";
+
   const abs = Math.abs(x);
-  if (abs !== 0 && (abs < 1e-3 || abs >= 1e6)) return x.toExponential(3);
-  return x.toLocaleString(undefined, { maximumFractionDigits: digits });
+
+  // Choose a sensible default precision when caller didn't request much.
+  // (Assays can be small; costs/masses can be large.)
+  let maxFrac = digits;
+  if (abs > 0 && abs < 0.01) maxFrac = Math.max(maxFrac, 6);
+  if (abs > 0 && abs < 0.001) maxFrac = Math.max(maxFrac, 8);
+
+  // Clamp to keep things readable
+  maxFrac = Math.min(maxFrac, 10);
+
+  return x.toLocaleString(undefined, {
+    useGrouping: true,
+    maximumFractionDigits: maxFrac,
+  });
 }
 
 function V(x) {
