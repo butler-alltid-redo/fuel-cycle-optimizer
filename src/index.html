@@ -6,6 +6,14 @@
     <title>Fuel-cycle optimizer (Feed & SWU)</title>
 
     <!-- Tailwind (CDN for MVP) -->
+    <script>
+      // Make Tailwind respect a manual `.dark` class on <html>
+      tailwind = {
+        config: {
+          darkMode: 'class',
+        },
+      };
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Plotly (CDN) -->

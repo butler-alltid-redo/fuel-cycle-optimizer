@@ -202,7 +202,8 @@ function render() {
         type: "scatter",
         mode: "lines",
         name: "Total cost",
-        line: { color: dark ? "#38bdf8" : "#0f172a", width: 3 },
+        // Match style with the other plots
+        line: { color: dark ? "#94a3b8" : "#334155" },
       },
       ...(optX
         ? [
