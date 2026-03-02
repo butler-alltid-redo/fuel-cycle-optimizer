@@ -282,7 +282,6 @@ function setDefaults() {
   $("useCK").checked = false;
   $("CK").value = "10";
 
-  $("xtOptBadge").classList.add("hidden");
 }
 
 function applyPreset(name) {
@@ -299,7 +298,6 @@ function applyPreset(name) {
     $("xt").value = "0.0018";
   }
   $("xtRange").value = $("xt").value;
-  $("xtOptBadge").classList.add("hidden");
   render();
 }
 
@@ -307,34 +305,28 @@ function wireEvents() {
   // Explicitly sync sliders <-> numeric inputs (more reliable than checking activeElement)
   $("xp").addEventListener("input", () => {
     syncPair("xp", "xpRange", "num");
-    $("xtOptBadge").classList.add("hidden");
     render();
   });
   $("xpRange").addEventListener("input", () => {
     syncPair("xp", "xpRange", "range");
-    $("xtOptBadge").classList.add("hidden");
     render();
   });
 
   $("xf").addEventListener("input", () => {
     syncPair("xf", "xfRange", "num");
-    $("xtOptBadge").classList.add("hidden");
     render();
   });
   $("xfRange").addEventListener("input", () => {
     syncPair("xf", "xfRange", "range");
-    $("xtOptBadge").classList.add("hidden");
     render();
   });
 
   $("xt").addEventListener("input", () => {
     syncPair("xt", "xtRange", "num");
-    $("xtOptBadge").classList.add("hidden");
     render();
   });
   $("xtRange").addEventListener("input", () => {
     syncPair("xt", "xtRange", "range");
-    $("xtOptBadge").classList.add("hidden");
     render();
   });
 
@@ -342,18 +334,12 @@ function wireEvents() {
   const ids = ["P", "CU", "CSWU", "useCK", "CK"];
   for (const id of ids) {
     $(id).addEventListener("input", () => {
-      $("xtOptBadge").classList.add("hidden");
       render();
     });
   }
 
   $("btnReset").addEventListener("click", () => {
     setDefaults();
-    render();
-  });
-
-  $("btnShowOpt").addEventListener("click", () => {
-    $("xtOptBadge").classList.remove("hidden");
     render();
   });
 
@@ -376,7 +362,6 @@ function wireEvents() {
     if (opt) {
       $("xt").value = String(opt.xt);
       $("xtRange").value = $("xt").value;
-      $("xtOptBadge").classList.remove("hidden");
       render();
     }
   });
