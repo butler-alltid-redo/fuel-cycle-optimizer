@@ -187,6 +187,12 @@ function render() {
 
   const optX = opt ? opt.xt * 100 : null;
 
+  const dark = document.documentElement.classList.contains("dark");
+  const plotBg = dark ? "#0b1220" : "#ffffff";
+  const paperBg = dark ? "#0b1220" : "#ffffff";
+  const fontColor = dark ? "#e2e8f0" : "#0f172a";
+  const gridColor = dark ? "#1f2937" : "#e5e7eb";
+
   Plotly.react(
     "plotCost",
     [
@@ -221,8 +227,11 @@ function render() {
     ],
     {
       margin: { t: 40, r: 10, b: 55, l: 60 },
-      xaxis: { title: "xt (tails assay, %)" },
-      yaxis: { title: "Cost ($)", rangemode: "tozero" },
+      paper_bgcolor: paperBg,
+      plot_bgcolor: plotBg,
+      font: { color: fontColor },
+      xaxis: { title: "xt (tails assay, %)", gridcolor: gridColor, zerolinecolor: gridColor },
+      yaxis: { title: "Cost ($)", rangemode: "tozero", gridcolor: gridColor, zerolinecolor: gridColor },
       legend: {
         orientation: "h",
         x: 1,
@@ -249,8 +258,11 @@ function render() {
     ],
     {
       margin: { t: 10, r: 10, b: 45, l: 60 },
-      xaxis: { title: "xt (%)" },
-      yaxis: { title: "SWU", rangemode: "tozero" },
+      paper_bgcolor: paperBg,
+      plot_bgcolor: plotBg,
+      font: { color: fontColor },
+      xaxis: { title: "xt (%)", gridcolor: gridColor, zerolinecolor: gridColor },
+      yaxis: { title: "SWU", rangemode: "tozero", gridcolor: gridColor, zerolinecolor: gridColor },
       showlegend: false,
     },
     { displayModeBar: false }
@@ -271,8 +283,11 @@ function render() {
     ],
     {
       margin: { t: 10, r: 10, b: 45, l: 60 },
-      xaxis: { title: "xt (%)" },
-      yaxis: { title: "Feed F (kgU)", rangemode: "tozero" },
+      paper_bgcolor: paperBg,
+      plot_bgcolor: plotBg,
+      font: { color: fontColor },
+      xaxis: { title: "xt (%)", gridcolor: gridColor, zerolinecolor: gridColor },
+      yaxis: { title: "Feed F (kgU)", rangemode: "tozero", gridcolor: gridColor, zerolinecolor: gridColor },
       showlegend: false,
     },
     { displayModeBar: false }
@@ -385,6 +400,39 @@ function wireEvents() {
   }
 }
 
+function initDarkMode() {
+  const root = document.documentElement;
+  const btn = $("darkToggle");
+
+  const apply = (mode) => {
+    const dark = mode === "dark";
+    root.classList.toggle("dark", dark);
+    if (btn) btn.textContent = dark ? "Light" : "Dark";
+  };
+
+  // initial
+  const saved = localStorage.getItem("theme");
+  if (saved === "dark" || saved === "light") {
+    apply(saved);
+  } else {
+    // default to system preference
+    const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    apply(prefersDark ? "dark" : "light");
+  }
+
+  if (btn) {
+    btn.addEventListener("click", () => {
+      const nowDark = root.classList.contains("dark");
+      const next = nowDark ? "light" : "dark";
+      localStorage.setItem("theme", next);
+      apply(next);
+      // Re-render Plotly with current layout colors
+      render();
+    });
+  }
+}
+
 setDefaults();
+initDarkMode();
 wireEvents();
 render();
