@@ -111,7 +111,8 @@ Buttons that load example scenarios:
   - **Plotly.js** (via CDN) for interactive plots (zoom/hover) with minimal code.
 - Deploy options later (after you approve plan): GitHub Pages.
 - Local run / shareability:
-  - Add a **Dockerfile** to serve the static site (nginx or a tiny static server), so anyone can run it with `docker run`.
+  - Add a **Dockerfile** that runs a tiny **Node.js static server**.
+  - The server will listen on **port 7856** (and the Docker image will `EXPOSE 7856`).
 
 ## Repo structure (proposed)
 ```
