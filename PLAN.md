@@ -105,21 +105,23 @@ Buttons that load example scenarios:
 - Static site (no backend):
   - `index.html`
   - `app.js`
-  - `styles.css`
+- Styling:
+  - **Tailwind CSS** (via CDN for MVP) to keep layout work fast and consistent.
 - Plotting:
-  - Option A: plain canvas/SVG
-  - Option B (preferred): a lightweight JS plotting lib via CDN (e.g. Plotly)
+  - **Plotly.js** (via CDN) for interactive plots (zoom/hover) with minimal code.
 - Deploy options later (after you approve plan): GitHub Pages.
+- Local run / shareability:
+  - Add a **Dockerfile** to serve the static site (nginx or a tiny static server), so anyone can run it with `docker run`.
 
 ## Repo structure (proposed)
 ```
 fuel-cycle-optimizer/
   PLAN.md
   README.md
+  Dockerfile
   src/
     index.html
     app.js
-    styles.css
   docs/            # optional, for GitHub Pages
   notes/
     lecture.pdf    # kept locally; not referenced by site
