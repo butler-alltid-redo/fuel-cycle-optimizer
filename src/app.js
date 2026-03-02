@@ -192,10 +192,16 @@ function render() {
       },
     ],
     {
-      margin: { t: 10, r: 10, b: 45, l: 60 },
+      margin: { t: 40, r: 10, b: 55, l: 60 },
       xaxis: { title: "xt (tails assay, %)" },
       yaxis: { title: "Cost ($)", rangemode: "tozero" },
-      legend: { orientation: "h" },
+      legend: {
+        orientation: "h",
+        x: 1,
+        xanchor: "right",
+        y: 1.25,
+        yanchor: "top",
+      },
     },
     { displayModeBar: false }
   );
