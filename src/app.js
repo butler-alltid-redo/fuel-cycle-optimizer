@@ -76,19 +76,12 @@ function setWarning(text) {
   el.classList.remove("hidden");
 }
 
-function syncRanges() {
+function syncPair(numId, rangeId, source) {
   // keep number inputs and sliders in sync
-  const pairs = [
-    ["xp", "xpRange"],
-    ["xf", "xfRange"],
-    ["xt", "xtRange"],
-  ];
-  for (const [numId, rangeId] of pairs) {
-    const num = $(numId);
-    const range = $(rangeId);
-    if (document.activeElement === num) range.value = num.value;
-    if (document.activeElement === range) num.value = range.value;
-  }
+  const num = $(numId);
+  const range = $(rangeId);
+  if (source === "num") range.value = num.value;
+  if (source === "range") num.value = range.value;
 }
 
 function updateCkVisibility() {
@@ -96,7 +89,6 @@ function updateCkVisibility() {
 }
 
 function render() {
-  syncRanges();
   updateCkVisibility();
 
   const inp = getInputs();
@@ -292,7 +284,42 @@ function applyPreset(name) {
 }
 
 function wireEvents() {
-  const ids = ["xp", "xpRange", "xf", "xfRange", "P", "xt", "xtRange", "CU", "CSWU", "useCK", "CK"];
+  // Explicitly sync sliders <-> numeric inputs (more reliable than checking activeElement)
+  $("xp").addEventListener("input", () => {
+    syncPair("xp", "xpRange", "num");
+    $("xtOptBadge").classList.add("hidden");
+    render();
+  });
+  $("xpRange").addEventListener("input", () => {
+    syncPair("xp", "xpRange", "range");
+    $("xtOptBadge").classList.add("hidden");
+    render();
+  });
+
+  $("xf").addEventListener("input", () => {
+    syncPair("xf", "xfRange", "num");
+    $("xtOptBadge").classList.add("hidden");
+    render();
+  });
+  $("xfRange").addEventListener("input", () => {
+    syncPair("xf", "xfRange", "range");
+    $("xtOptBadge").classList.add("hidden");
+    render();
+  });
+
+  $("xt").addEventListener("input", () => {
+    syncPair("xt", "xtRange", "num");
+    $("xtOptBadge").classList.add("hidden");
+    render();
+  });
+  $("xtRange").addEventListener("input", () => {
+    syncPair("xt", "xtRange", "range");
+    $("xtOptBadge").classList.add("hidden");
+    render();
+  });
+
+  // Other inputs
+  const ids = ["P", "CU", "CSWU", "useCK", "CK"];
   for (const id of ids) {
     $(id).addEventListener("input", () => {
       $("xtOptBadge").classList.add("hidden");
